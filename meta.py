@@ -10,7 +10,10 @@ from method.models import Post, User, Info
 from datetime import timedelta
 
 
-
+print('\nсоздание экземпляра класса модели')
+a = Post(title='Document', content='Something')
+a.save() # только тут идет обращение к бд
+print(f'Title: {a.title}, Content: {a.content}')
 
 print('\nИзменение title')
 a.title = 'Other title'
@@ -112,7 +115,7 @@ c = Info.objects.alias(user_count=Count('user')).order_by('-user_count')
 
 for item in c:
     print(f' {item.headline}')
-print('\nНужен для сортировки фильрации по вычислению')
+print('\nНужен для сортировки фильтрации по вычислению')
 
 print('\nNormal')
 for i in Post.objects.all().order_by('-title'):
@@ -127,10 +130,10 @@ for item in post2:
 print('\nDistinct')
 info2 = Info.objects.order_by('-headline').distinct()
 for item in info2:
-    print(f' {item.headline}')
+    print(f'\nУникальные элементы\n{item.headline}')
 
 
-print('\nValues 3 последние записи по дате публикации')
+print('\nValues  последние записи по дате публикации')
 info3 = Info.objects.order_by('-pub_date').values('pub_date')
 for item in info3:
     print(f'Value: {item}')
